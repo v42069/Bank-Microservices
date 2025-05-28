@@ -9,7 +9,7 @@ The project follows **microservices architecture**, where each service is **inde
 ## 🛠️ Tech Stack
 - **Backend**: Java, Spring Boot, Spring Cloud, Docker, RabbitMQ
 - **Build Tool**: Maven
-- **Database**: PostgreSQL / H2
+- **Database**: MySQL / H2
 - **Dependencies**: MapStruct, Springboot actuators, Spring cloud bus
 - **Containerization**: Docker, Docker Compose
 - **Exception Handling**: Global Exception Handler
@@ -26,5 +26,6 @@ The project follows **microservices architecture**, where each service is **inde
 - 📌 **Readable API Responses** – Implements a **custom Response Structure** for consistency.  
 - 📌 **Implemented Open API** – Improves **API Documentation** using Open API. ans Swagger UI.
 - 📌 **Used Docker** – For **Containerization** of each microservice and Docker Compose for multi-container applications.  
-- 📌 *Implemented SpringBoot Profiles using Spring Cloud ConfigServer*  – For external config management using github implementing encrypted configuration and changing it during runtime.
+- 📌 *Implemented SpringBoot Profiles using Spring Cloud ConfigServer*  – For external config management using github implementing encrypted configuration.
+- 📌 *Implemented SpringCloudBus and RabbitMQ*  – Changing different configuration environment during runtime using Spring Cloud Bus and RabbitMQ
 
