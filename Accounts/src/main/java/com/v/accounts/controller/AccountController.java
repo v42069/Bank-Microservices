@@ -120,7 +120,6 @@ public class AccountController {
 	@GetMapping("fetch")
 	public ResponseEntity<?> fetchAccountDetails(
 			@Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be exactly 10 digits")
-
 			@RequestParam String mobileNumber) {
 		ResponseStructure<?> fetch = accountsService.fetch(mobileNumber);
 		return ResponseEntity.status(fetch.getStatusCode()).body(fetch);
@@ -258,6 +257,7 @@ public class AccountController {
 	                .body(accountsContactInfoDto);
 	    }
 
+	    
 
 
 	

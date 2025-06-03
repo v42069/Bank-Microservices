@@ -82,7 +82,7 @@ public class AccountsServiceImpl implements IAccountsService {
 		Accounts account = accountRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
 				() -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString()));
 
-		CustomerDto customerDto = customerMapper.toDto(customer);
+		CustomerDto customerDto = customerMapper.toCustomerDto(customer);
 		customerDto.setAccountsDto(accountMapper.toDto(account));
 		return ResponseStructure.<CustomerDto>builder().data(customerDto).message("Details Fetched")
 				.statusCode(HttpStatus.OK.value()).build();

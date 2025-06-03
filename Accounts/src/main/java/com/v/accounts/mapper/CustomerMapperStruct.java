@@ -5,14 +5,17 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
+import com.v.accounts.dto.CustomerDetailsDto;
 import com.v.accounts.dto.CustomerDto;
 import com.v.accounts.entity.Customer;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapperStruct {
-	CustomerDto toDto(Customer customer);
+	CustomerDto toCustomerDto(Customer customer);
 
 	Customer toEntity(CustomerDto customerDto);
+	
+	CustomerDetailsDto toCustomerDetailsDto(Customer customer);
 
 	// Update an existing Customer entity with only non-null values from DTO
 	@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
