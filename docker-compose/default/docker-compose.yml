@@ -1,3 +1,4 @@
+
 services:
   rabbit:
     image: rabbitmq:3.13-management
@@ -16,7 +17,7 @@ services:
       service: network-deploy-service
 
   configserver:
-    image: "vighneshkt/configserver:s7"
+    image: "vighneshkt/configserver:s8"
     container_name: configserver-ms
     platform: linux/arm64
     ports:
@@ -34,50 +35,59 @@ services:
       file: common-config.yml
       service: microservice-base-config
 
+  eurekaserver:
+    image: "vighneshkt/eurekaserver:s8"
+    container_name: eurekaserver-ms
+    platform: linux/arm64
+    ports:
+      - "8070:8070"
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    environment:
+        SPRING_APPLICATION_NAME: "eurekaserver"
+
   accounts:
-    image: "vighneshkt/accounts:s7"
+    image: "vighneshkt/accounts:s8"
     container_name: accounts-ms
     platform: linux/arm64
     ports:
       - "8080:8080"
-    depends_on:
-      configserver:
-        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eurekaserver-config
 
   loans:
-    image: "vighneshkt/loans:s7"
+    image: "vighneshkt/loans:s8"
     container_name: loans-ms
     platform: linux/arm64
     ports:
       - "8090:8090"
-    depends_on:
-      configserver:
-        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "loans"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eurekaserver-config
 
   cards:
-    image: "vighneshkt/cards:s7"
+    image: "vighneshkt/cards:s8"
     container_name: cards-ms
     platform: linux/arm64
     ports:
       - "9000:9000"
-    depends_on:
-      configserver:
-        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "cards"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eurekaserver-config
 
 networks:
   v:
