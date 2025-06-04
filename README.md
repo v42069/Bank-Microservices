@@ -1,34 +1,69 @@
 # 🏦 Bank Microservices
 
 ## 📚 Overview
-This project is a **banking system** built using **Spring Boot microservices architecture**. It follows **best practices** for API design, error handling, and scalability.
+A modular **banking system** built using **Spring Boot microservices**, designed for scalability, maintainability, and clean API design.
 
 ## 🏷️ Architecture
-The project follows **microservices architecture**, where each service is **independent** and communicates via **REST APIs**.
+- Follows the **Microservices Architecture** pattern.
+- Each service is **independently deployable** and communicates via **REST APIs**.
+- Uses **centralized configuration**, **service discovery**, and **client-side load balancing**.
 
 ## 🛠️ Tech Stack
-- **Backend**: Java, Spring Boot, Spring Cloud, Docker, RabbitMQ
-- **Build Tool**: Maven
-- **Database**: MySQL / H2
-- **Dependencies**: MapStruct, Springboot actuators, Spring cloud bus
-- **Containerization**: Docker, Docker Compose
-- **Exception Handling**: Global Exception Handler
-- **API Response**: Custom Response Structure
-- **API Documentation**: Open API Swagger UI
 
-## ⚙️ Microservices Implemented
-1. **Account and Customer Service** – Manages bank accounts and handles customer onboarding  
-2. **Loans Service** – Manages Loans  
-3. **Cards Service** – Manages Cards  
+| Category             | Tools                                              |
+|----------------------|----------------------------------------------------|
+| **Language & Framework** | Java, Spring Boot, Spring Cloud                |
+| **Build Tool**       | Maven                                              |
+| **Database**         | MySQL, H2 (for dev/test)                           |
+| **API Docs**         | OpenAPI + Swagger UI                              |
+| **Mapping**          | MapStruct                                          |
+| **Containerization** | Docker, Docker Compose                            |
+| **Messaging**        | RabbitMQ                                           |
+| **Config Management**| Spring Cloud Config Server, Spring Cloud Bus      |
+| **Observability**    | Spring Boot Actuator                               |
 
-## ✅ Key Features
-- 📌 **Robust Exception Handling** – Uses a **Global Exception Handler** for standardized error responses.  
-- 📌 **Readable API Responses** – Implements a **custom Response Structure** for consistency.  
-- 📌 **Implemented Open API** – Improves **API Documentation** using Open API. ans Swagger UI.
-- 📌 **Used Docker** – For **Containerization** of each microservice and Docker Compose for multi-container applications.  
-- 📌 **Implemented SpringBoot Profiles using Spring Cloud ConfigServer**  – For external config management using github implementing encrypted configuration.
-- 📌 **Implemented SpringCloudBus and RabbitMQ**  – Changing different configuration environment during runtime using Spring Cloud Bus and RabbitMQ
-- 📌 **Implemented Client Side Service Discovery and Load Balancing**  – Used Eureka server for service discovery and feign client for communication
+## ⚙️ Microservices
 
+- **🧾 Account & Customer Service** – Handles bank accounts and customer data  
+- **🏠 Loans Service** – Manages loans  
+- **💳 Cards Service** – Manages card issuance and operations  
 
+## ✅ Key Functionalities
 
+### 🎯 Core Features
+
+- **Global Exception Handling**  
+  Standardized API error responses via a centralized handler.
+
+- **Custom API Response Structure**  
+  All APIs return a consistent response format for better readability and integration.
+
+- **OpenAPI Documentation**  
+  Swagger UI for live documentation and testing of all APIs.
+
+### 🚀 Infrastructure Features
+
+- **Containerized Services**  
+  Dockerized microservices using Docker Compose for local orchestration.
+
+- **Centralized Configuration**  
+  Uses Spring Cloud Config Server (with GitHub backend) to manage external properties per environment.
+
+- **Encrypted Configuration Support**  
+  Sensitive values in config (like DB passwords) are encrypted using JCE.
+
+- **Dynamic Configuration Reloading**  
+  Spring Cloud Bus + RabbitMQ enables live config updates without restarting services.
+
+- **Service Discovery and Load Balancing**  
+  Eureka for service registration and discovery.  
+  Feign clients for declarative REST communication and client-side load balancing.
+
+## 📦 How to Run
+
+```bash
+# Step 1: Start all containers
+docker-compose up --build
+
+# Step 2: Access Swagger UI for services
+http://localhost:<port>/swagger-ui.html
