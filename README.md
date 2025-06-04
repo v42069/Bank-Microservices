@@ -28,4 +28,7 @@ The project follows **microservices architecture**, where each service is **inde
 - 📌 **Used Docker** – For **Containerization** of each microservice and Docker Compose for multi-container applications.  
 - 📌 **Implemented SpringBoot Profiles using Spring Cloud ConfigServer**  – For external config management using github implementing encrypted configuration.
 - 📌 **Implemented SpringCloudBus and RabbitMQ**  – Changing different configuration environment during runtime using Spring Cloud Bus and RabbitMQ
+- 📌 **Implemented Client Side Service Discovery and Load Balancing**  – Used Eureka server for service discovery and feign client for communication
+
+
 
