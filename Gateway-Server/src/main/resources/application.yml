@@ -5,7 +5,8 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          lowerCaseServiceId: true
+          enabled: false
   config:
     import: "optional:configserver:http://localhost:8071/"
   rabbitmq:
@@ -43,3 +44,10 @@ management:
   info:
     env:
       enabled: true
+      
+      
+logging:
+  level:
+    com:
+      v:
+        gatewayserver: DEBUG
