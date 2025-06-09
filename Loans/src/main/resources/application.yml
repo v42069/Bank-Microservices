@@ -45,7 +45,15 @@ info:
     
 
 management:
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
   endpoint:
+    health:
+      probes:
+        enabled: true
     shutdown:
       enabled: true
   info: 
@@ -56,3 +64,9 @@ management:
       exposure:
         include: "*"
         
+
+logging:
+  level:
+    com:
+      v:
+        loans: INFO
