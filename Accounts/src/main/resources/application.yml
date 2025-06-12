@@ -58,7 +58,7 @@ management:
       probes:
         enabled: true      # Enables both probes under `/actuator/health/*`
     shutdown:
-      enabled: true        # Enables POST /actuator/shutdown (use with caution!)
+      enabled: true        # Enables POST /actuator/shutdown (use with caution!
   info: 
     env: 
       enabled: true        # Makes ENV variables available in /actuator/info
@@ -66,6 +66,10 @@ management:
     web:
       exposure:
         include: "*"       # Exposes all actuator endpoints
+  cloud:
+    openfeign:
+      circuitBreaker:
+        enabled: true 
         
   
 logging:
@@ -73,3 +77,13 @@ logging:
     com:
       v:
         accounts: INFO
+        
+        
+      
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 4
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000

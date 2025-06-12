@@ -55,8 +55,8 @@ public class CustomerServiceImpl implements ICustomerService {
 
 		ResponseEntity<CardsDto> fetchCardDetails = cardsFeignClient.fetchCardDetails(mobileNumber);
 
-		customerDetailsDto.setLoansDto(fetchLoan.getData());
-		customerDetailsDto.setCardsDto(fetchCardDetails.getBody());
+		customerDetailsDto.setLoansDto(fetchLoan!=null?fetchLoan.getData():null);
+		customerDetailsDto.setCardsDto(fetchCardDetails!=null?fetchCardDetails.getBody():null);
 
 		return ResponseStructure.<CustomerDetailsDto>builder().data(customerDetailsDto).message("Details Fetched")
 				.statusCode(HttpStatus.OK.value()).build();
