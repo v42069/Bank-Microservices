@@ -11,6 +11,7 @@ import lombok.*;
         description = "Schema to hold Card information"
 )
 @Data
+@Builder
 public class CardsDto {
 
     @NotEmpty(message = "Mobile Number can not be a null or empty")

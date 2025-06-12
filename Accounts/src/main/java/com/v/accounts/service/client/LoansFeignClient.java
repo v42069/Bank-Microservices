@@ -9,7 +9,7 @@ import com.v.accounts.dto.LoansDto;
 import com.v.accounts.responsestructure.ResponseStructure;
 
 
-@FeignClient("loans")
+@FeignClient(name="loans",fallback = LoansFallBack.class)
 public interface LoansFeignClient {
 	
 	@GetMapping(value="/api/fetch", consumes = "json")
