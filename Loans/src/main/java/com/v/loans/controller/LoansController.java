@@ -1,5 +1,7 @@
 package com.v.loans.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -42,6 +44,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequestMapping(path = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
 public class LoansController {
+	
+Logger log=LogManager.getLogger(LoansController.class);
 
 	private ILoansService iLoansService;
 
@@ -108,6 +112,7 @@ public class LoansController {
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@GetMapping("/contact-info")
 	public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+		log.info("Invoked Loans Contact-info API");
 		return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
 	}
 
