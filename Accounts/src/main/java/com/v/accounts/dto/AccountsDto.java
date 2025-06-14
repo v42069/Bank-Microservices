@@ -12,8 +12,6 @@ import lombok.Data;
 public class AccountsDto {
 	
 
-	    private Long customerId;
-
 	    @Pattern(regexp = "(^[0-9]{10}$)",message = "Mobile no must be 10 digit")
 	    @NotEmpty(message = "accountNumber cannot be null") 
 	    @Schema(

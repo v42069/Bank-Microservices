@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: accounts
+  cloud:
+    openfeign:
+      circuitBreaker:
+        enabled: true 
   profiles:
     active: prod
   config:
@@ -66,10 +70,6 @@ management:
     web:
       exposure:
         include: "*"       # Exposes all actuator endpoints
-  cloud:
-    openfeign:
-      circuitBreaker:
-        enabled: true 
         
   
 logging:
@@ -87,3 +87,12 @@ resilience4j.circuitbreaker:
       permittedNumberOfCallsInHalfOpenState: 2
       failureRateThreshold: 50
       waitDurationInOpenState: 10000
+      
+      
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 3
+      waitDuration: 500
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
