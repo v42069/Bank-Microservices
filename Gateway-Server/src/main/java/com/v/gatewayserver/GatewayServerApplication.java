@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpMethod;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
+import reactor.core.publisher.Mono;
 
 
 
@@ -24,6 +27,17 @@ public class GatewayServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayServerApplication.class, args);
+	}
+	
+	@Bean
+	public RedisRateLimiter redisRateLimiter() {
+		return new RedisRateLimiter(1, 1, 1);
+	}
+
+	@Bean
+	public KeyResolver userKeyResolver() {
+		return exchange -> Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst("user"))
+				.defaultIfEmpty("anonymous");
 	}
 	
 
@@ -48,13 +62,15 @@ public class GatewayServerApplication {
 						.uri("lb://ACCOUNTS"))
 				.route(p -> p.path("/v/cards/**")
 						.filters(f -> f.rewritePath("/v/cards/(?<segment>.*)", "/${segment}")
-						.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+						.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+						.requestRateLimiter(config->config.setRateLimiter(redisRateLimiter()).setKeyResolver(userKeyResolver())))
 						.uri("lb://CARDS"))
 				.route(p -> p.path("/v/loans/**")
 						.filters(f -> f.rewritePath("/v/loans/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
 								.retry(retryConfig->retryConfig.setRetries(3).setMethods(HttpMethod.GET)
-								.setBackoff(Duration.ofMillis(100),Duration.ofSeconds(2) , 2, true)))
+								.setBackoff(Duration.ofMillis(100),Duration.ofSeconds(2) , 2, true))
+			)
 						.uri("lb://LOANS"))
 				.build();
 

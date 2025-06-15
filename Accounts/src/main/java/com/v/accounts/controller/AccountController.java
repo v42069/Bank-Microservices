@@ -20,6 +20,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 
+import java.util.concurrent.TimeoutException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,12 +208,12 @@ public class AccountController {
 	    )
 	    @Retry(name="getBuildInfo",fallbackMethod = "getBuildInfoFallback")
 	    @GetMapping("/build-info")
-	    public ResponseEntity<String> getBuildInfo() {
+	    public ResponseEntity<String> getBuildInfo() throws TimeoutException {
 		 logger.info("getBuildInfo invoked");
-		 throw new NullPointerException();
-//	        return ResponseEntity
-//	                    .status(HttpStatus.OK)
-//	                    .body(buildVersion);
+//		 throw new TimeoutException();
+	        return ResponseEntity
+	                    .status(HttpStatus.OK)
+	                    .body(buildVersion);
 	    }
 	 
 	    public ResponseEntity<String> getBuildInfoFallback(Throwable throwable) {
