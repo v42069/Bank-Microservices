@@ -8,6 +8,7 @@ import com.v.accounts.responsestructure.ErrorResponse;
 import com.v.accounts.responsestructure.ResponseStructure;
 import com.v.accounts.service.IAccountsService;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -243,11 +244,17 @@ public class AccountController {
 	            )
 	    }
 	    )
+	    @RateLimiter(name = "getJavaVersion" , fallbackMethod = "getJavaVersionFallback")
 	    @GetMapping("/java-version")
 	    public ResponseEntity<String> getJavaVersion() {
 	        return ResponseEntity
 	                .status(HttpStatus.OK)
-	                .body(environment.getProperty("accounts.contactDetails.name"));
+	                .body(environment.getProperty("java.version"));
+	    }
+	    public ResponseEntity<String> getJavaVersionFallback(Throwable throwable) {
+	        return ResponseEntity
+	                .status(HttpStatus.OK)
+	                .body("Rate limiter hit Java 17 version");
 	    }
 
 	    @Operation(
