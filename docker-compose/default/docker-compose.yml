@@ -29,7 +29,7 @@ services:
       service: network-deploy-service
 
   gatewayserver:
-    image: "vighneshkt/gatewayserver:s10"
+    image: "vighneshkt/gatewayserver:s11"
     container_name: gatewayserver-ms
     platform: linux/arm64
     ports:
@@ -57,7 +57,7 @@ services:
 
 
   configserver:
-    image: "vighneshkt/configserver:s10"
+    image: "vighneshkt/configserver:s11"
     container_name: configserver-ms
     platform: linux/arm64
     ports:
@@ -76,7 +76,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "vighneshkt/eurekaserver:s10"
+    image: "vighneshkt/eurekaserver:s11"
     container_name: eurekaserver-ms
     platform: linux/arm64
     ports:
@@ -94,7 +94,7 @@ services:
         SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "vighneshkt/accounts:s10"
+    image: "vighneshkt/accounts:s11"
     container_name: accounts-ms
     platform: linux/arm64
     ports:
@@ -112,7 +112,7 @@ services:
       service: microservice-eurekaserver-config
 
   loans:
-    image: "vighneshkt/loans:s10"
+    image: "vighneshkt/loans:s11"
     container_name: loans-ms
     platform: linux/arm64
     ports:
@@ -130,7 +130,7 @@ services:
       service: microservice-eurekaserver-config
 
   cards:
-    image: "vighneshkt/cards:s10"
+    image: "vighneshkt/cards:s11"
     container_name: cards-ms
     platform: linux/arm64
     ports:
