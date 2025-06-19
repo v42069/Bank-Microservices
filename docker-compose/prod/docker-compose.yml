@@ -1,5 +1,17 @@
 
 services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      timeout: 10s
+      retries: 10
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+      
   rabbit:
     image: rabbitmq:3.13-management
     hostname: rabbitmq
@@ -17,7 +29,7 @@ services:
       service: network-deploy-service
 
   gatewayserver:
-    image: "vighneshkt/gatewayserver:s9"
+    image: "vighneshkt/gatewayserver:s10"
     container_name: gatewayserver-ms
     platform: linux/arm64
     ports:
@@ -29,8 +41,14 @@ services:
         condition: service_healthy
       cards: 
         condition: service_healthy
+      redis:
+         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_DATA_REDIS_CONNECT-TIMEOUT: 2s
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_TIMEOUT: 1s
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
@@ -39,7 +57,7 @@ services:
 
 
   configserver:
-    image: "vighneshkt/configserver:s9"
+    image: "vighneshkt/configserver:s10"
     container_name: configserver-ms
     platform: linux/arm64
     ports:
@@ -58,7 +76,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "vighneshkt/eurekaserver:s9"
+    image: "vighneshkt/eurekaserver:s10"
     container_name: eurekaserver-ms
     platform: linux/arm64
     ports:
@@ -76,7 +94,7 @@ services:
         SPRING_APPLICATION_NAME: "eurekaserver"
 
   accounts:
-    image: "vighneshkt/accounts:s9"
+    image: "vighneshkt/accounts:s10"
     container_name: accounts-ms
     platform: linux/arm64
     ports:
@@ -94,7 +112,7 @@ services:
       service: microservice-eurekaserver-config
 
   loans:
-    image: "vighneshkt/loans:s9"
+    image: "vighneshkt/loans:s10"
     container_name: loans-ms
     platform: linux/arm64
     ports:
@@ -112,7 +130,7 @@ services:
       service: microservice-eurekaserver-config
 
   cards:
-    image: "vighneshkt/cards:s9"
+    image: "vighneshkt/cards:s10"
     container_name: cards-ms
     platform: linux/arm64
     ports:
