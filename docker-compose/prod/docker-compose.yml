@@ -96,12 +96,12 @@ services:
   tempo:
     image: grafana/tempo:2.6.1
     container_name: tempo
-    command: -config.file /etc/tempo-config.yml
+    command: -config.file /etc/tempo/tempo.yml
     ports:
       - "3110:3100"
       - "4318:4318"
     volumes:
-      - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
+      - ../observability/tempo:/etc/tempo
     extends:
       file: common-config.yml
       service: network-deploy-service
@@ -215,6 +215,7 @@ services:
     extends:
       file: common-config.yml
       service: network-deploy-service
+  
 
 
 
