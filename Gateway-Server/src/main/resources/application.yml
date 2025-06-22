@@ -43,6 +43,9 @@ info:
     version: 1.0
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
   endpoints:
     web:
       exposure:
