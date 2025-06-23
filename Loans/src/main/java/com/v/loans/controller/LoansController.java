@@ -3,7 +3,6 @@ package com.v.loans.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.v.loans.LoansApplication;
 import com.v.loans.dto.LoansContactInfoDto;
 import com.v.loans.dto.LoansDto;
 import com.v.loans.responsestructure.ErrorResponse;
@@ -45,7 +43,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Validated
 public class LoansController {
 	
-Logger log=LogManager.getLogger(LoansController.class);
+Logger logger=LogManager.getLogger(LoansController.class);
 
 	private ILoansService iLoansService;
 
@@ -75,7 +73,9 @@ Logger log=LogManager.getLogger(LoansController.class);
 
 	@GetMapping("fetch")
 	public ResponseEntity<?> fetchLoan(@RequestParam String mobileNumber) {
+		logger.info("fetchLoan method start");
 		ResponseStructure<?> fetchLoan = iLoansService.fetchLoan(mobileNumber);
+		logger.info("fetchLoan method ends");
 		return ResponseEntity.status(fetchLoan.getStatusCode()).body(fetchLoan);
 	}
 
@@ -112,7 +112,7 @@ Logger log=LogManager.getLogger(LoansController.class);
 			@ApiResponse(responseCode = "500", description = "HTTP Status Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorResponse.class))) })
 	@GetMapping("/contact-info")
 	public ResponseEntity<LoansContactInfoDto> getContactInfo() {
-		log.info("Invoked Loans Contact-info API");
+		logger.info("Invoked Loans Contact-info API");
 		return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
 	}
 

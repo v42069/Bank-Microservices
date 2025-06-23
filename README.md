@@ -3,24 +3,46 @@
 ## 📚 Overview
 A modular **banking system** built using **Spring Boot microservices**, designed for scalability, maintainability, and clean API design.
 
-## 🏷️ Architecture
-- Follows the **Microservices Architecture** pattern.
-- Each service is **independently deployable** and communicates via **REST APIs**.
-- Uses **centralized configuration**, **service discovery**, and **client-side load balancing**.
-
 ## 🛠️ Tech Stack
 
-| Category             | Tools                                              |
-|----------------------|----------------------------------------------------|
-| **Language & Framework** | Java, Spring Boot, Spring Cloud                |
-| **Build Tool**       | Maven                                              |
-| **Database**         | MySQL, H2 (for dev/test)                           |
-| **API Docs**         | OpenAPI + Swagger UI                              |
-| **Mapping**          | MapStruct                                          |
-| **Containerization** | Docker, Docker Compose                            |
-| **Messaging**        | RabbitMQ                                           |
-| **Config Management**| Spring Cloud Config Server, Spring Cloud Bus      |
-| **Observability**    | Spring Boot Actuator                               |
+### 📦 Backend & Microservices
+- Java 17
+- Spring Boot
+- Spring Cloud (Config, Gateway, Eureka, OpenFeign)
+- Spring Data JPA
+- Springdoc OpenAPI (Swagger)
+
+### 🧱 Architecture & Design
+- Microservices Architecture
+- RESTful APIs
+- DTO, Builder Pattern
+- Resilience4j (Circuit Breaker, Retry, Bulkhead, RateLimiter)
+- Config Server with Git Integration
+
+### 🗃️ Databases
+- MySQL (via Docker)
+- H2 (for initial development/testing)
+
+### 🐳 Containerization & DevOps
+- Docker & Docker Compose
+- Buildpacks (alternative to Dockerfiles)
+- DockerHub (image registry)
+
+### 🔐 Configuration & Profiles
+- Spring Profiles (`dev`, `qa`, `prod`)
+- Externalized Configuration with Spring Cloud Config Server
+- Encrypted Properties (JCE + Spring Cloud)
+
+### 🔍 Observability & Monitoring
+- **Logging**: Grafana + Loki + Promtail
+- **Metrics**: Micrometer + Prometheus
+- **Tracing**: OpenTelemetry + Grafana Tempo
+- **Alerting**: Grafana Alerting
+
+### 📄 Documentation
+- Swagger UI (Springdoc OpenAPI)
+
+---
 
 ## ⚙️ Microservices
 
@@ -28,41 +50,124 @@ A modular **banking system** built using **Spring Boot microservices**, designed
 - **🏠 Loans Service** – Manages loans  
 - **💳 Cards Service** – Manages card issuance and operations  
 
-## ✅ Key Functionalities
+
+---
+### 🛠️ Git branches summary Overview
+
+### 🛠️ Service Infrastructure Branch Overview
+
+The course also emphasizes critical service infrastructure components essential for running microservices in production:
+
+- **🔍 Observability**: Enables monitoring and debugging of microservices using:
+  - Centralized logging (Grafana + Loki + Promtail)
+  - Metrics and dashboards (Micrometer + Prometheus + Grafana)
+  - Distributed tracing (OpenTelemetry + Tempo)
+  - Alerting mechanisms
+
+- **🔐 Security**: Although detailed security sections come later, foundational infrastructure includes:
+  - API Gateway security and filters
+  - Property encryption using Spring Cloud Config
+  - Service-level communication protection and token handling
+
+These infrastructure features help ensure **scalability, reliability, and maintainability** of microservices in real-world environments.
+
+---
+
 
 ### 🎯 Core Features
 
-- **Global Exception Handling**  
-  Standardized API error responses via a centralized handler.
+### ✅  CRUD Operations in Accounts Service
+- Created JPA Entities and Repositories
+- DTO pattern introduction and implementation
+- Implemented:
+  - Create Account API
+  - Read Account API
+  - Update Account API
+  - Delete Account API
+- Global exception handling
+- Auto-update of audit fields (created_at, updated_at)
 
-- **Custom API Response Structure**  
-  All APIs return a consistent response format for better readability and integration.
+### ✅ API Documentation using Springdoc OpenAPI
+- Integrated Swagger UI with Springdoc
+- Used annotations:
+  - `@OpenAPIDefinition`
+  - `@Tag`, `@Operation`, `@ApiResponse`, `@Schema`
+- Enhanced auto-generated documentation
 
-- **OpenAPI Documentation**  
-  Swagger UI for live documentation and testing of all APIs.
 
-### 🚀 Infrastructure Features
+### ✅ Dockerizing Microservices
+- Dockerfile created for each service
+- Generated Docker images locally
+- Ran containers using Docker CLI
+- Introduced Buildpacks and compared with Dockerfile approach
+- Docker image push to DockerHub
 
-- **Containerized Services**  
-  Dockerized microservices using Docker Compose for local orchestration.
+### ✅ Spring Boot Profiles and Configuration Management
+- Added `dev`, `qa`, and `prod` Spring profiles
+- Externalized configs using:
+  - `@Value`
+  - `Environment`
+  - `@ConfigurationProperties`
+- Activated profiles using command-line/JVM/environment variables
 
-- **Centralized Configuration**  
-  Uses Spring Cloud Config Server (with GitHub backend) to manage external properties per environment.
+### ✅ Spring Cloud Config Server
+- Built `config-server` with Spring Cloud Config
+- Externalized properties to file system and Git
+- Implemented:
+  - Encryption/decryption of config properties
+  - Auto-refresh via `/actuator/refresh`
+  - Spring Cloud Bus for distributed refresh
+- Updated docker-compose for config server integration
 
-- **Encrypted Configuration Support**  
-  Sensitive values in config (like DB passwords) are encrypted using JCE.
+### ✅ Integrating MySQL Database
+- Replaced H2 DB with MySQL for all services
+- Dockerized MySQL containers
+- Created schema and updated entity configurations
+- Demonstrated Docker networking with services + DB containers
+- Added uptil this in seperate git branch use s7 image from docker hub
 
-- **Dynamic Configuration Reloading**  
-  Spring Cloud Bus + RabbitMQ enables live config updates without restarting services.
+### ✅ Service Discovery with Eureka
+- Implemented `eureka-server`
+- Registered `accounts`, `loans`, `cards` microservices to Eureka
+- Replaced static URLs with service names
+- Feign client integration for service-to-service calls
+- Eureka client deregistration on shutdown
+- Docker s8 version images
 
-- **Service Discovery and Load Balancing**  
-  Eureka for service registration and discovery.  
-  Feign clients for declarative REST communication and client-side load balancing.
+### ✅ API Gateway using Spring Cloud Gateway
+- Created Gateway microservice using Spring Cloud Gateway
+- Configured default and custom routing for internal services
+- Added response headers using filters
+- Implemented cross-cutting concerns: logging and tracing at the gateway
+- Discussed design patterns used in API Gateway
+- Docker s9 version images
+
+### ✅ Making Microservices Resilient
+- Introduced need for resiliency and typical failure scenarios
+- Implemented:
+  - Circuit Breaker pattern (Gateway + Feign)
+  - Retry pattern (Accounts)
+  - Rate Limiting using Redis RateLimiter (Gateway + Accounts)
+- Configured timeouts and aspect order for resilience
+- Demoed resiliency using Docker Compose setup
+- Docker s10 version images
+
+### ✅ Observability and Monitoring
+- Concepts of observability, centralized logging, and monitoring
+- Setup and integrated:
+  - Logging: Grafana + Loki + Promtail
+  - Metrics: Micrometer + Prometheus + Grafana Dashboards
+  - Alerts: Grafana alerting with 2 approaches
+  - Tracing: OpenTelemetry + Grafana Tempo
+- Implemented log tracing, metrics collection, and distributed tracing end-to-end
+- Docker s11 version images
+
+---
 
 ## 📦 How to Run
 
 ```bash
-# Step 1: Start all containers
+# Step 1: Select containers based on features 
 docker-compose up --build
 
 # Step 2: Access Swagger UI for services

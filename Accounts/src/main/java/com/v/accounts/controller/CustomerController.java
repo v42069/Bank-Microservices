@@ -1,5 +1,7 @@
 package com.v.accounts.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,9 @@ public class CustomerController {
 	
 	private ICustomerService customerService;
 	
+	private static final Logger logger= LoggerFactory.getLogger(AccountController.class);
+
+	
 	 @Operation(
 	            summary = "Fetch Customer Details REST API",
 	            description = "REST API to fetch Customer details based on a mobile number"
@@ -56,8 +61,10 @@ public class CustomerController {
 	public ResponseEntity<?> customerDetails(
 			@Pattern(regexp = "^[0-9]{10}$", message = "Mobile number must be exactly 10 digits")
 			@RequestParam String mobileNumber){
-		
+		 
+		logger.info("customerDetails method start");
 		 ResponseStructure<?> fetchCustomerDetails = customerService.fetchCustomerDetails(mobileNumber);
+		 logger.info("customerDetails method end");
 		 return ResponseEntity.status(HttpStatus.OK).body(fetchCustomerDetails);
 	}
 

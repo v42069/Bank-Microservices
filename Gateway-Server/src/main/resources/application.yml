@@ -59,10 +59,12 @@ management:
       
       
 logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
   level:
     com:
       v:
-        gatewayserver: DEBUG
+        gatewayserver: INFO
         
       
 resilience4j.circuitbreaker:
