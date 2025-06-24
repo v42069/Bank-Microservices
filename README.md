@@ -16,7 +16,7 @@ A modular **banking system** built using **Spring Boot microservices**, designed
 - Microservices Architecture
 - RESTful APIs
 - DTO, Builder Pattern
-- Resilience4j (Circuit Breaker, Retry, Bulkhead, RateLimiter)
+- Resilience4j (Circuit Breaker, Retry, RateLimiter)
 - Config Server with Git Integration
 
 ### 🗃️ Databases
@@ -52,7 +52,7 @@ A modular **banking system** built using **Spring Boot microservices**, designed
 
 
 ---
-### 🛠️ Git branches summary Overview
+### 🛠️ Git Branches Summary
 
 ### 🛠️ Service Infrastructure Branch Overview
 

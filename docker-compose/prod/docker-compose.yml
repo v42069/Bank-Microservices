@@ -268,6 +268,7 @@ services:
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_TIMEOUT: 1s
+      OTEL_SERVICE_NAME: "gatewayserver" 
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
@@ -293,6 +294,9 @@ services:
     extends:
       file: common-config.yml
       service: microservice-base-config
+    environment:
+        SPRING_APPLICATION_NAME: "configserver"
+        OTEL_SERVICE_NAME: "configserver"      
 
   eurekaserver:
     image: "vighneshkt/eurekaserver:s11"
@@ -311,6 +315,7 @@ services:
       service: microservice-configserver-config
     environment:
         SPRING_APPLICATION_NAME: "eurekaserver"
+        OTEL_SERVICE_NAME: "eurekaserver"
 
   accounts:
     image: "vighneshkt/accounts:s11"
@@ -326,6 +331,7 @@ services:
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "accounts"
+      OTEL_SERVICE_NAME: "accounts"
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
@@ -344,6 +350,7 @@ services:
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "loans"
+      OTEL_SERVICE_NAME: "loans"
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
@@ -362,6 +369,7 @@ services:
       start_period: 10s
     environment:
       SPRING_APPLICATION_NAME: "cards"
+      OTEL_SERVICE_NAME: "cards"
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
