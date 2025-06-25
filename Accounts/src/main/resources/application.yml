@@ -52,6 +52,9 @@ endpoints:
     enabled: true
   
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
   health:
     readiness-state:
       enabled: true        # Enables readiness probe
@@ -73,11 +76,12 @@ management:
         
   
 logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
   level:
     com:
       v:
         accounts: INFO
-        
         
       
 resilience4j.circuitbreaker:

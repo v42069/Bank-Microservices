@@ -5,6 +5,9 @@ spring:
     import: "optional:configserver:http://localhost:8071/"
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
   endpoints:
     web:
       exposure:
@@ -18,3 +21,12 @@ management:
     health:
       probes:
         enabled: true
+        
+        
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+  level:
+    com:
+      v:
+        eurekaserver: INFO
