@@ -5,7 +5,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:7080/realms/master
+          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
 
   data:
     redis:
@@ -75,7 +75,7 @@ logging:
       
 keycloak:
   client-id: v-callcenter-CC
-  client-secret: z7YpUw1ZAWKvdHlws1NX3eqC4TOczxG7
+  client-secret: BC3Ty1ZSgKdk4fBLzxtObg3RmHCc6fD5
   token-url: http://localhost:7080/realms/master/protocol/openid-connect/token
 
 
