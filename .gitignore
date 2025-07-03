@@ -1,3 +1,11 @@
+# macOS
+.DS_Store
+
+# Eclipse
+.metadata/
+
+# MinIO runtime data
+docker-compose/prod/.data/
 *.env
 
 
