@@ -1,0 +1,12 @@
+
+build:
+  version: "1.0"
+
+loans:
+  message: "Welcome to Bank loans related production APIs  using github"
+  contactDetails:
+    name: "Reine Aishwarya - Product Owner"
+    email: "{cipher}f73a4c6fd8f35d51e1ebdbc2df69f0c172c174e0736329cb8b297f65c9059c7b"
+  onCallSupport:
+    - (453) 392-4829
+    - (236) 203-0384

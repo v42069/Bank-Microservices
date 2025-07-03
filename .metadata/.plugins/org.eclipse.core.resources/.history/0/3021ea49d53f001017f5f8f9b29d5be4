@@ -1,0 +1,8 @@
+package com.v.accounts.service.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient
+public interface CardsFeignClient {
+
+}

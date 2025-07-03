@@ -1,0 +1,44 @@
+package com.v.gatewayserver.config;
+
+import javax.crypto.spec.SecretKeySpec;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+
+@Configuration
+@EnableWebFluxSecurity
+public class SecurityConfig {
+
+	@Bean
+	public SecurityWebFilterChain webFilterChain (ServerHttpSecurity httpSecurity) {
+		
+		return httpSecurity.authorizeExchange(exchanges->exchanges
+//			.anyExchange().authenticated()//authenticate all api
+//			.anyExchange().permitAll()//allow access to all api without authentication
+			.pathMatchers(HttpMethod.GET).permitAll()//allow only get request api
+			.pathMatchers("/v/accounts/**").authenticated()
+			.pathMatchers("/v/cards/**").authenticated()
+			.pathMatchers("/v/loans/**").authenticated())
+		.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
+				.jwt(Customizer.withDefaults())
+				)
+		.csrf(ccsrf->ccsrf.disable())
+		.build();
+		
+		
+	}
+	 @Bean
+	    public ReactiveJwtDecoder jwtDecoder() {
+	        String secret = "z7YpUw1ZAWKvdHlws1NX3eqC4TOczxG7";
+	        SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
+	        return NimbusReactiveJwtDecoder.withSecretKey(secretKey).build();
+	    }
+}

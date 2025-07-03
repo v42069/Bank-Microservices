@@ -1,0 +1,5 @@
+package com.v.gatewayserver.config;
+
+public class SecurityPorperties {
+
+}

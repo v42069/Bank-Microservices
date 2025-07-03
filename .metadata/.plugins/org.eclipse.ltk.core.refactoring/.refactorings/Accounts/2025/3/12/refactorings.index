@@ -1,0 +1,12 @@
+1742237848603	Rename resource 'application.properties'
+1742324060873	Rename resource 'schema..sql'
+1742580182258	Rename type 'AccountsService'
+1742649966875	Delete element
+1742656334584	Rename type 'ErrorDto'
+1742656370849	Move compilation unit
+1742656387854	Delete element
+1742656404219	Rename type 'ResponseStructure'
+1742656611787	Rename type 'ResponseStructureBuilder'
+1742659966724	Rename type 'SuccessResponse'
+1742659978726	Delete element
+1742660726078	Delete element

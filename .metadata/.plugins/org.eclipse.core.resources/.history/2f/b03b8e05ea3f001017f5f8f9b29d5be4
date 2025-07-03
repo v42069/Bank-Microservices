@@ -1,0 +1,5 @@
+package com.v.accounts.controller;
+
+public class CustomerController {
+
+}

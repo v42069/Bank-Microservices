@@ -1,0 +1,13 @@
+package com.v.accounts.mapper;
+
+import org.mapstruct.Mapper;
+
+import com.v.accounts.dto.CustomerDetailsDto;
+import com.v.accounts.entity.Customer;
+
+@Mapper(componentModel = "spring")
+public interface customerDetailsMapper {
+	
+	CustomerDetailsDto toDto(Customer customer);
+
+}

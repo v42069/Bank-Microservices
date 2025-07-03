@@ -1,0 +1,62 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: cards  
+  profiles:
+    active: prod
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+  datasource:
+    url: jdbc:h2:mem:cardsdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+ 
+   
+    
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+      
+info:
+  app: 
+    name: cards
+    description: cards ms
+    version: 1.0
+    
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  info: 
+    env: 
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        
+        
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:}, %X{v-correlation-id}]"
+        
