@@ -1,5 +1,4 @@
-
-# MinIO data (do not track runtime data)
+.DS_Store
+.metadata/
 docker-compose/prod/.data/
 
-/.metadata/
