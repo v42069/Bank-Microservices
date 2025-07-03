@@ -132,35 +132,51 @@ These infrastructure features help ensure **scalability, reliability, and mainta
 - Replaced static URLs with service names
 - Feign client integration for service-to-service calls
 - Eureka client deregistration on shutdown
-- Docker s8 version images
+- Docker `s8` version images
 
 ### ✅ API Gateway using Spring Cloud Gateway
-- Created Gateway microservice using Spring Cloud Gateway
+- **Created Gateway microservice using Spring Cloud Gateway**
 - Configured default and custom routing for internal services
 - Added response headers using filters
 - Implemented cross-cutting concerns: logging and tracing at the gateway
 - Discussed design patterns used in API Gateway
-- Docker s9 version images
+- Docker `s9` version images
 
 ### ✅ Making Microservices Resilient
 - Introduced need for resiliency and typical failure scenarios
 - Implemented:
-  - Circuit Breaker pattern (Gateway + Feign)
-  - Retry pattern (Accounts)
-  - Rate Limiting using Redis RateLimiter (Gateway + Accounts)
+  - **Circuit Breaker pattern (Gateway + Feign)**
+  - **Retry pattern (Accounts)**
+  - **Rate Limiting using Redis RateLimiter (Gateway + Accounts)**
 - Configured timeouts and aspect order for resilience
 - Demoed resiliency using Docker Compose setup
-- Docker s10 version images
+- Docker `s10` version images
 
 ### ✅ Observability and Monitoring
-- Concepts of observability, centralized logging, and monitoring
+- Concepts of **observability, centralized logging, and monitoring**
 - Setup and integrated:
   - Logging: Grafana + Loki + Promtail
   - Metrics: Micrometer + Prometheus + Grafana Dashboards
   - Alerts: Grafana alerting with 2 approaches
   - Tracing: OpenTelemetry + Grafana Tempo
 - Implemented log tracing, metrics collection, and distributed tracing end-to-end
-- Docker s11 version images
+- Docker `s11` version images
+
+### 🔐 Microservices Security with OAuth2 & Keycloak
+- Implementing OAuth2 and OpenID Connect:
+- Implemented **Client Credentials Grant Flow**:
+  - Keycloak setup and client registration
+  - Gateway server secured as a **Resource Server**
+  - Access tokens fetched and validated
+  - Role-based authorization enforced inside the gateway
+- Implemented **Authorization Code Grant Flow**:
+  - User and client setup in Keycloak
+  - Full login flow with token issuance and validation
+  - Role-based access control using Keycloak roles and scopes
+- Secured all microservices through API Gateway
+- Final demo with **Docker Compose**: Auth server, Gateway, and services secured with Keycloak
+- Docker `s12` version images
+
 
 ---
 
