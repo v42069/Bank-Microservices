@@ -1,8 +1,0 @@
-package com.v.accounts.service.client;
-
-import org.springframework.cloud.openfeign.FeignClient;
-
-@FeignClient("loans")
-public interface LoansFeignClient {
-
-}

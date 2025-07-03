@@ -1,5 +1,0 @@
-package com.v.accounts.service.client;
-
-public class CardsFallback {
-
-}

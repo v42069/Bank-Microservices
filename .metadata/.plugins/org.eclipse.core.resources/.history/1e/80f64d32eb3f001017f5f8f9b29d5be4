@@ -1,9 +1,0 @@
-package com.v.accounts.service;
-
-import com.v.accounts.dto.CustomerDetailsDto;
-
-public interface ICustomerService {
-	
-	CustomerDetailsDto fetchCustomerDetails(String mobile);
-
-}
