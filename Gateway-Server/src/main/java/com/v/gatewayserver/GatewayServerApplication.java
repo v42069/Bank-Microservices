@@ -28,11 +28,6 @@ import reactor.core.publisher.Mono;
 @EnableConfigurationProperties(AppAuthProperties.class) // Enable config binding
 public class GatewayServerApplication {
 
-	private final AppAuthProperties appAuthProperties;
-
-	public GatewayServerApplication(AppAuthProperties appAuthProperties) {
-		this.appAuthProperties = appAuthProperties;
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayServerApplication.class, args);
@@ -56,7 +51,6 @@ public class GatewayServerApplication {
 	}
 
 	@Bean
-
 	public RouteLocator vBanksConfig(RouteLocatorBuilder routeLocatorBuilder) {
 		return routeLocatorBuilder.routes()
 				.route(p -> p.path("/v/accounts/**")
