@@ -1,4 +1,19 @@
+
 services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: keycloak
+    ports:
+      - "7080:8080"
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    command: "start-dev"
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+  
+
   read:
     image: grafana/loki:3.1.2
     command: "-config.file=/etc/loki/config.yaml -target=read"
@@ -29,13 +44,13 @@ services:
       - 9095
     volumes:
       - ../observability/loki/loki-config.yaml:/etc/loki/config.yaml
-    depends_on:
-      - minio
     healthcheck:
       test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3100/ready || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
+    depends_on:
+      - minio
     networks:
       <<: *loki-dns
 
@@ -155,7 +170,7 @@ services:
       - |
         cat <<EOF > /etc/nginx/nginx.conf
         user  nginx;
-        worker_processes  5;
+        worker_processes  5;  ## Default: 1
 
         events {
           worker_connections   1000;
@@ -173,31 +188,31 @@ services:
             }
 
             location = /api/prom/push {
-              proxy_pass       http://write:3100\$request_uri;
+              proxy_pass       http://write:3100\$$request_uri;
             }
 
             location = /api/prom/tail {
-              proxy_pass       http://read:3100\$request_uri;
-              proxy_set_header Upgrade \$http_upgrade;
+              proxy_pass       http://read:3100\$$request_uri;
+              proxy_set_header Upgrade \$$http_upgrade;
               proxy_set_header Connection "upgrade";
             }
 
             location ~ /api/prom/.* {
-              proxy_pass       http://read:3100\$request_uri;
+              proxy_pass       http://read:3100\$$request_uri;
             }
 
             location = /loki/api/v1/push {
-              proxy_pass       http://write:3100\$request_uri;
+              proxy_pass       http://write:3100\$$request_uri;
             }
 
             location = /loki/api/v1/tail {
-              proxy_pass       http://read:3100\$request_uri;
-              proxy_set_header Upgrade \$http_upgrade;
+              proxy_pass       http://read:3100\$$request_uri;
+              proxy_set_header Upgrade \$$http_upgrade;
               proxy_set_header Connection "upgrade";
             }
 
             location ~ /loki/api/.* {
-              proxy_pass       http://read:3100\$request_uri;
+              proxy_pass       http://read:3100\$$request_uri;
             }
           }
         }
@@ -213,6 +228,9 @@ services:
     extends:
       file: common-config.yml
       service: network-deploy-service
+  
+
+
 
   redis:
     image: redis
@@ -225,7 +243,7 @@ services:
     extends:
       file: common-config.yml
       service: network-deploy-service
-
+      
   rabbit:
     image: rabbitmq:3.13-management
     hostname: rabbitmq
@@ -243,20 +261,20 @@ services:
       service: network-deploy-service
 
   gatewayserver:
-    image: "vighneshkt/gatewayserver:s11"
+    image: "vighneshkt/gatewayserver:s12"
     container_name: gatewayserver-ms
     platform: linux/arm64
     ports:
-      - "8072:8072"
+      - "8072:8072" 
     depends_on:
-      accounts:
+      accounts: 
         condition: service_healthy
-      loans:
+      loans: 
         condition: service_healthy
-      cards:
+      cards: 
         condition: service_healthy
       redis:
-        condition: service_healthy
+         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
       SPRING_DATA_REDIS_CONNECT-TIMEOUT: 2s
@@ -264,12 +282,16 @@ services:
       SPRING_DATA_REDIS_PORT: 6379
       SPRING_DATA_REDIS_TIMEOUT: 1s
       OTEL_SERVICE_NAME: "gatewayserver"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs" 
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
 
+
+
+
   configserver:
-    image: "vighneshkt/configserver:s11"
+    image: "vighneshkt/configserver:s12"
     container_name: configserver-ms
     platform: linux/arm64
     ports:
@@ -283,15 +305,15 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-    environment:
-      SPRING_APPLICATION_NAME: "configserver"
-      OTEL_SERVICE_NAME: "configserver"
     extends:
       file: common-config.yml
       service: microservice-base-config
+    environment:
+        SPRING_APPLICATION_NAME: "configserver"
+        OTEL_SERVICE_NAME: "configserver"      
 
   eurekaserver:
-    image: "vighneshkt/eurekaserver:s11"
+    image: "vighneshkt/eurekaserver:s12"
     container_name: eurekaserver-ms
     platform: linux/arm64
     ports:
@@ -302,19 +324,17 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-    environment:
-      SPRING_APPLICATION_NAME: "eurekaserver"
-      OTEL_SERVICE_NAME: "eurekaserver"
     extends:
       file: common-config.yml
       service: microservice-configserver-config
+    environment:
+        SPRING_APPLICATION_NAME: "eurekaserver"
+        OTEL_SERVICE_NAME: "eurekaserver"
 
   accounts:
-    image: "vighneshkt/accounts:s11"
+    image: "vighneshkt/accounts:s12"
     container_name: accounts-ms
     platform: linux/arm64
-    ports:
-      - "8080:8080"
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -329,7 +349,7 @@ services:
       service: microservice-eurekaserver-config
 
   loans:
-    image: "vighneshkt/loans:s11"
+    image: "vighneshkt/loans:s12"
     container_name: loans-ms
     platform: linux/arm64
     ports:
@@ -348,7 +368,7 @@ services:
       service: microservice-eurekaserver-config
 
   cards:
-    image: "vighneshkt/cards:s11"
+    image: "vighneshkt/cards:s12"
     container_name: cards-ms
     platform: linux/arm64
     ports:

@@ -22,6 +22,12 @@ management:
       probes:
         enabled: true
         
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
         
 logging:
   pattern:
