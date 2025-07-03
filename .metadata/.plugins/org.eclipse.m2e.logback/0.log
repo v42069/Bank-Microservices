@@ -14856,3 +14856,21 @@ java.util.NoSuchElementException: No value present
 2025-07-04 01:34:19,497 [Worker-857: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
 2025-07-04 01:34:19,512 [Worker-857: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
 2025-07-04 01:34:19,520 [Worker-857: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/BaBa/workspace-spring-tool-suite-4-4.26.0.RELEASE/Microservices/Bank-Microservices/Accounts/src/test/resources
+2025-07-04 01:48:00,358 [Worker-893: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 3 resources from src/main/resources to target/classes
+2025-07-04 01:48:01,782 [Worker-893: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src/main/resources to target/classes
+2025-07-04 01:48:01,842 [Worker-893: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/BaBa/workspace-spring-tool-suite-4-4.26.0.RELEASE/Microservices/Bank-Microservices/Accounts/src/test/resources
+2025-07-04 01:48:02,127 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,129 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,132 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/BaBa/workspace-spring-tool-suite-4-4.26.0.RELEASE/Microservices/Bank-Microservices/Cards/src/test/resources
+2025-07-04 01:48:02,164 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,165 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,168 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/BaBa/workspace-spring-tool-suite-4-4.26.0.RELEASE/Microservices/Bank-Microservices/ConfigServer/src/test/resources
+2025-07-04 01:48:02,194 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,195 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,197 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/BaBa/workspace-spring-tool-suite-4-4.26.0.RELEASE/Microservices/Bank-Microservices/Eureka-Server/src/test/resources
+2025-07-04 01:48:02,233 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,235 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,239 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/BaBa/workspace-spring-tool-suite-4-4.26.0.RELEASE/Microservices/Bank-Microservices/Gateway-Server/src/test/resources
+2025-07-04 01:48:02,277 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,279 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src/main/resources to target/classes
+2025-07-04 01:48:02,286 [Worker-891: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /Users/BaBa/workspace-spring-tool-suite-4-4.26.0.RELEASE/Microservices/Bank-Microservices/Loans/src/test/resources

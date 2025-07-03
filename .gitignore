@@ -1,2 +1,5 @@
 
+# MinIO data (do not track runtime data)
+docker-compose/prod/.data/
+
 /.metadata/
