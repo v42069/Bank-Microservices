@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Eclipse/IDE metadata
+.metadata/
+*.snap
+*.markers.snap
+*.syncinfo.snap
+
