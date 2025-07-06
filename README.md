@@ -173,8 +173,7 @@ These infrastructure features help ensure **scalability, reliability, and mainta
   - User and client setup in Keycloak
   - Full login flow with token issuance and validation
   - Role-based access control using Keycloak roles and scopes
-- Secured all microservices through API Gateway
-- Final demo with **Docker Compose**: Auth server, Gateway, and services secured with Keycloak
+- **Secured all microservices through API Gateway**
 - Docker `s12` version images
 
 

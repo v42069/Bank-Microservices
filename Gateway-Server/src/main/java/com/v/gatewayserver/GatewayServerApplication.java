@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import com.v.gatewayserver.config.AppAuthProperties;
 
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
@@ -25,7 +24,7 @@ import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
-@EnableConfigurationProperties(AppAuthProperties.class) // Enable config binding
+//@EnableConfigurationProperties(AppAuthProperties.class) // Enable config binding
 public class GatewayServerApplication {
 
 
