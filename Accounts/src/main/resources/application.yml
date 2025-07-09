@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: accounts
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
   cloud:
     function:
       definition: updateCommunication
@@ -20,11 +25,6 @@ spring:
     active: prod
   config:
     import: "optional:configserver:http://localhost:8071/"
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
   datasource:
     url: jdbc:h2:mem:accountsdb
     driver-class-name: org.h2.Driver

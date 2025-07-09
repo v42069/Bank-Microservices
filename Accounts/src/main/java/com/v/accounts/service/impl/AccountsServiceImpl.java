@@ -3,11 +3,15 @@ package com.v.accounts.service.impl;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.stereotype.Service;
 
 import com.v.accounts.dto.AccountsDto;
+import com.v.accounts.dto.AccountsMsgDto;
 import com.v.accounts.dto.CustomerDto;
 import com.v.accounts.entity.Accounts;
 import com.v.accounts.entity.Customer;
@@ -31,6 +35,10 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class AccountsServiceImpl implements IAccountsService {
+	
+	private static final Logger log=LoggerFactory.getLogger(AccountsServiceImpl.class);
+	
+	public final StreamBridge streamBridge;
 
 	private AccountsRepository accountRepository;
 
@@ -50,11 +58,21 @@ public class AccountsServiceImpl implements IAccountsService {
 //		customer.setCreatedAt(LocalDateTime.now());
 //		customer.setCreatedBy("Annanimus");
 		customerRepository.save(customer);
-		accountRepository.save(createNewAccount(customer));
+		Accounts save = accountRepository.save(createNewAccount(customer));
+		sendCommunication(save, customer);
 
 		return ResponseStructure.<String>builder().data(customer.getEmail()).message(AccountsConstants.MESSAGE_201)
 				.statusCode(HttpStatus.CREATED.value()).build();
 	}
+	
+	 private void sendCommunication(Accounts account, Customer customer) {
+	        var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(),
+	                customer.getEmail(), customer.getMobileNumber());
+	        log.info("Sending Communication request for the details: {}", accountsMsgDto);
+	        var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
+	        log.info("Is the Communication request successfully triggered ? : {}", result);
+	    }
+
 
 	/**
 	 * Creating account for customer
