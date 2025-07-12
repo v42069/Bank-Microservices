@@ -35,9 +35,9 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class AccountsServiceImpl implements IAccountsService {
-	
-	private static final Logger log=LoggerFactory.getLogger(AccountsServiceImpl.class);
-	
+
+	private static final Logger log = LoggerFactory.getLogger(AccountsServiceImpl.class);
+
 	public final StreamBridge streamBridge;
 
 	private AccountsRepository accountRepository;
@@ -64,15 +64,14 @@ public class AccountsServiceImpl implements IAccountsService {
 		return ResponseStructure.<String>builder().data(customer.getEmail()).message(AccountsConstants.MESSAGE_201)
 				.statusCode(HttpStatus.CREATED.value()).build();
 	}
-	
-	 private void sendCommunication(Accounts account, Customer customer) {
-	        var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(),
-	                customer.getEmail(), customer.getMobileNumber());
-	        log.info("Sending Communication request for the details: {}", accountsMsgDto);
-	        var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
-	        log.info("Is the Communication request successfully triggered ? : {}", result);
-	    }
 
+	private void sendCommunication(Accounts account, Customer customer) {
+		var accountsMsgDto = new AccountsMsgDto(account.getAccountNumber(), customer.getName(), customer.getEmail(),
+				customer.getMobileNumber());
+		log.info("Sending Communication request for the details: {}", accountsMsgDto);
+		var result = streamBridge.send("sendCommunication-out-0", accountsMsgDto);
+		log.info("Is the Communication request successfully triggered ? : {}", result);
+	}
 
 	/**
 	 * Creating account for customer
@@ -140,21 +139,36 @@ public class AccountsServiceImpl implements IAccountsService {
 	@Transactional
 	public ResponseStructure<?> delete(String mobileNumber) {
 
-		boolean isDeleted =false;
+		boolean isDeleted = false;
 		if (mobileNumber != null) {
-			Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
-					() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
-		
+			Customer customer = customerRepository.findByMobileNumber(mobileNumber)
+					.orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+
 			accountRepository.deleteByCustomerId(customer.getCustomerId());
 			customerRepository.deleteById(customer.getCustomerId());
-			isDeleted=true;
+			isDeleted = true;
 		}
-		if(isDeleted) {
+		if (isDeleted) {
 			return ResponseStructure.<String>builder().statusCode(HttpStatus.OK.value())
 					.message("Customer Deleted Successfully").data(mobileNumber).build();
 		}
 		return ResponseStructure.<String>builder().statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
 				.message("Customer Deleted Failed").data(mobileNumber).build();
 
+	}
+
+	@Override
+	public boolean updateCommunicationStatus(Long accountNumber) {
+		// TODO Auto-generated method stub
+		boolean isUpdated=false;
+		if(accountNumber!=null) {
+			Accounts account = accountRepository.findById(accountNumber).orElseThrow(
+					()->new ResourceNotFoundException("Account", "AccountNumber", accountNumber.toString())
+		);
+		account.setCommunicationSwitch(true);
+		accountRepository.save(account);
+		isUpdated=true;
+		}
+		return isUpdated;
 	}
 }

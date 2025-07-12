@@ -261,7 +261,7 @@ services:
       service: network-deploy-service
 
   gatewayserver:
-    image: "vighneshkt/gatewayserver:s12"
+    image: "vighneshkt/gatewayserver:s13"
     container_name: gatewayserver-ms
     platform: linux/arm64
     ports:
@@ -291,7 +291,7 @@ services:
 
 
   configserver:
-    image: "vighneshkt/configserver:s12"
+    image: "vighneshkt/configserver:s13"
     container_name: configserver-ms
     platform: linux/arm64
     ports:
@@ -313,7 +313,7 @@ services:
         OTEL_SERVICE_NAME: "configserver"      
 
   eurekaserver:
-    image: "vighneshkt/eurekaserver:s12"
+    image: "vighneshkt/eurekaserver:s13"
     container_name: eurekaserver-ms
     platform: linux/arm64
     ports:
@@ -332,9 +332,12 @@ services:
         OTEL_SERVICE_NAME: "eurekaserver"
 
   accounts:
-    image: "vighneshkt/accounts:s12"
+    image: "vighneshkt/accounts:s13"
     container_name: accounts-ms
     platform: linux/arm64
+    depends_on:
+      rabbit:
+        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -344,12 +347,13 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "accounts"
       OTEL_SERVICE_NAME: "accounts"
+      SPRING_RABBITMQ_HOST: "rabbit"
     extends:
       file: common-config.yml
       service: microservice-eurekaserver-config
 
   loans:
-    image: "vighneshkt/loans:s12"
+    image: "vighneshkt/loans:s13"
     container_name: loans-ms
     platform: linux/arm64
     ports:
@@ -368,7 +372,7 @@ services:
       service: microservice-eurekaserver-config
 
   cards:
-    image: "vighneshkt/cards:s12"
+    image: "vighneshkt/cards:s13"
     container_name: cards-ms
     platform: linux/arm64
     ports:
@@ -386,6 +390,20 @@ services:
       file: common-config.yml
       service: microservice-eurekaserver-config
 
+
+  message:
+    image: "vighneshkt/message:s13"
+    container_name: message-ms
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+      
+      
 networks:
   v:
     driver: "bridge"

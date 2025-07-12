@@ -36,6 +36,8 @@ public interface IAccountsService {
 	 * @return
 	 */
 	ResponseStructure<?> delete (String mobileNumber);
+	
+	boolean updateCommunicationStatus(Long accountNumber);
 
 
 }
