@@ -196,6 +196,21 @@ These infrastructure features help ensure **scalability, reliability, and mainta
 - Docker-based setup:
 - **Docker**: `s13` version images used
 
+### ✅ Event-Driven Microservices with Spring Cloud Stream & Apache Kafka (KRaft Mode)
+
+- Compared **Apache Kafka vs RabbitMQ** for event-driven architecture:
+  - Kafka: log-based, distributed, high-throughput message streaming (KRaft mode – no Zookeeper)
+- Implemented **Asynchronous Event Streaming** using Kafka (KRaft mode)
+- Developed **Producer & Consumer Microservices** using Spring Cloud Stream:
+  - Functional-style `@Bean` consumers for clean message processing
+  - Used `StreamBridge` to publish events to Kafka topics
+- Enabled **end-to-end async communication**:
+  - `producer-service` sends events to Kafka topic
+  - `consumer-service` consumes and processes those events
+- Configured **Spring Cloud Stream Kafka Binder**:
+  - Defined topic bindings and Kafka broker settings in `application.yml`
+- Docker-based setup:
+- **Docker**: `s14` version images used
 
 ---
 

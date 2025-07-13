@@ -3,15 +3,19 @@ server:
 spring:
   application:
     name: accounts
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    username: "guest"
-    password: "guest"
+#  rabbitmq:
+#    host: "localhost"
+#    port: 5672
+#    username: "guest"
+#    password: "guest"
   cloud:
     function:
       definition: updateCommunication
     stream:
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092  
       bindings:
         updateCommunication-in-0:
           destination: communication-sent
