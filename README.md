@@ -132,6 +132,7 @@ These infrastructure features help ensure **scalability, reliability, and mainta
 - Replaced static URLs with service names
 - Feign client integration for service-to-service calls
 - Eureka client deregistration on shutdown
+- Docker-based setup:
 - Docker `s8` version images
 
 ### ✅ API Gateway using Spring Cloud Gateway
@@ -140,6 +141,7 @@ These infrastructure features help ensure **scalability, reliability, and mainta
 - Added response headers using filters
 - Implemented cross-cutting concerns: logging and tracing at the gateway
 - Discussed design patterns used in API Gateway
+- Docker-based setup:
 - Docker `s9` version images
 
 ### ✅ Making Microservices Resilient
@@ -149,7 +151,7 @@ These infrastructure features help ensure **scalability, reliability, and mainta
   - **Retry pattern (Accounts)**
   - **Rate Limiting using Redis RateLimiter (Gateway + Accounts)**
 - Configured timeouts and aspect order for resilience
-- Demoed resiliency using Docker Compose setup
+- Docker-based setup:
 - Docker `s10` version images
 
 ### ✅ Observability and Monitoring
@@ -160,9 +162,10 @@ These infrastructure features help ensure **scalability, reliability, and mainta
   - Alerts: Grafana alerting with 2 approaches
   - Tracing: OpenTelemetry + Grafana Tempo
 - Implemented log tracing, metrics collection, and distributed tracing end-to-end
+- Docker-based setup:
 - Docker `s11` version images
 
-### 🔐 Microservices Security with OAuth2 & Keycloak
+###  ✅Microservices Security with OAuth2 & Keycloak
 - Implementing OAuth2 and OpenID Connect:
 - Implemented **Client Credentials Grant Flow**:
   - Keycloak setup and client registration
@@ -174,7 +177,24 @@ These infrastructure features help ensure **scalability, reliability, and mainta
   - Full login flow with token issuance and validation
   - Role-based access control using Keycloak roles and scopes
 - **Secured all microservices through API Gateway**
+- Docker-based setup:
 - Docker `s12` version images
+
+### ✅ Event-Driven Microservices with Spring Cloud Stream & RabbitMQ
+- Implemented **Event-Driven Architecture** using RabbitMQ as a message broker
+- Developed **Message Microservice** using Spring Cloud Function:
+  - Functional-style `@Bean` consumers for event handling
+  - Used `StreamBridge` to publish events
+- Updated **Message & Accounts Microservices** to support **2-way communication**:
+  - `message` microservice publishes events consumed by `accounts`
+  - `accounts` microservice processes those events and responds with its own events
+  - Enabled full **bi-directional asynchronous communication**
+- Used **Spring Cloud Stream** for messaging abstraction:
+  - Configured bindings to connect microservices with RabbitMQ
+- Demonstrated **Asynchronous Communication** between services:
+  - Verified end-to-end message flow via RabbitMQ exchanges and queues
+- Docker-based setup:
+- **Docker**: `s13` version images used
 
 
 ---
@@ -183,7 +203,6 @@ These infrastructure features help ensure **scalability, reliability, and mainta
 
 ```bash
 # Step 1: Select containers based on features 
+dockerhub URL: https://hub.docker.com/repositories/vighneshkt
 docker-compose up --build
 
-# Step 2: Access Swagger UI for services
-http://localhost:<port>/swagger-ui.html
