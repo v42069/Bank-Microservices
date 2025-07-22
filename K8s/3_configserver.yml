@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: configserver
-        image: vighneshkt/configserver:s14
+        image: vighneshkt/configserver:s12
         ports:
         - containerPort: 8071
 ---
