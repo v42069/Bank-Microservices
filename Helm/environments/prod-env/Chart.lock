@@ -1,0 +1,27 @@
+dependencies:
+- name: v-common
+  repository: file://../../v-common
+  version: 0.1.0
+- name: configserver
+  repository: file://../../v-services/configserver
+  version: 0.1.0
+- name: eurekaserver
+  repository: file://../../v-services/eurekaserver
+  version: 0.1.0
+- name: accounts
+  repository: file://../../v-services/accounts
+  version: 0.1.0
+- name: cards
+  repository: file://../../v-services/cards
+  version: 0.1.0
+- name: loans
+  repository: file://../../v-services/loans
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../v-services/gatewayserver
+  version: 0.1.0
+- name: message
+  repository: file://../../v-services/message
+  version: 0.1.0
+digest: sha256:41eec11aa230a86f73c3053221dbebdd8d95bd45067d10a0d1b38a2a463e4924
+generated: "2025-07-26T11:35:26.432187+05:30"

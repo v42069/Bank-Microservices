@@ -1,0 +1,6 @@
+dependencies:
+- name: v-common
+  repository: file://../../v-common
+  version: 0.1.0
+digest: sha256:f96916304e58aea45027097d81a246751b4cde55feb48ab075d627ba332ccf7c
+generated: "2025-07-26T11:29:35.091035+05:30"
