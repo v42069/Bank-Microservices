@@ -16,13 +16,22 @@ helm install my-release oci://registry-1.docker.io/bitnamicharts/keycloak
 
 Looking to use Keycloak in production? Try [VMware Tanzu Application Catalog](https://bitnami.com/enterprise), the commercial edition of the Bitnami catalog.
 
+## ⚠️ Important Notice: Upcoming changes to the Bitnami Catalog
+
+Beginning August 28th, 2025, Bitnami will evolve its public catalog to offer a curated set of hardened, security-focused images under the new [Bitnami Secure Images initiative](https://news.broadcom.com/app-dev/broadcom-introduces-bitnami-secure-images-for-production-ready-containerized-applications). As part of this transition:
+
+- Granting community users access for the first time to security-optimized versions of popular container images.
+- Bitnami will begin deprecating support for non-hardened, Debian-based software images in its free tier and will gradually remove non-latest tags from the public catalog. As a result, community users will have access to a reduced number of hardened images. These images are published only under the “latest” tag and are intended for development purposes
+- Starting August 28th, over two weeks, all existing container images, including older or versioned tags (e.g., 2.50.0, 10.6), will be migrated from the public catalog (docker.io/bitnami) to the “Bitnami Legacy” repository (docker.io/bitnamilegacy), where they will no longer receive updates.
+- For production workloads and long-term support, users are encouraged to adopt Bitnami Secure Images, which include hardened containers, smaller attack surfaces, CVE transparency (via VEX/KEV), SBOMs, and enterprise support.
+
+These changes aim to improve the security posture of all Bitnami users by promoting best practices for software supply chain integrity and up-to-date deployments. For more details, visit the [Bitnami Secure Images announcement](https://github.com/bitnami/containers/issues/83267).
+
 ## Introduction
 
 Bitnami charts for Helm are carefully engineered, actively maintained and are the quickest and easiest way to deploy containers on a Kubernetes cluster that are ready to handle production workloads.
 
 This chart bootstraps a [Keycloak](https://github.com/bitnami/containers/tree/main/bitnami/keycloak) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
-
-Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
 
 ## Prerequisites
 
@@ -97,6 +106,7 @@ externalDatabase.user=myuser
 externalDatabase.password=mypassword
 externalDatabase.database=mydatabase
 externalDatabase.port=5432
+externalDatabase.schema=public
 ```
 
 > NOTE: Only PostgreSQL database server is supported as external database
@@ -358,6 +368,7 @@ As an alternative, you can use of the preset configurations for pod affinity, po
 | `dnsConfig`              | DNS Configuration pod                                                                   | `{}`            |
 | `clusterDomain`          | Default Kubernetes cluster domain                                                       | `cluster.local` |
 | `extraDeploy`            | Array of extra objects to deploy with the release                                       | `[]`            |
+| `usePasswordFiles`       | Mount credentials as files instead of using environment variables                       | `true`          |
 | `diagnosticMode.enabled` | Enable diagnostic mode (all probes will be disabled and the command will be overridden) | `false`         |
 | `diagnosticMode.command` | Command to override all containers in the the statefulset                               | `["sleep"]`     |
 | `diagnosticMode.args`    | Args to override all containers in the the statefulset                                  | `["infinity"]`  |
@@ -644,9 +655,11 @@ As an alternative, you can use of the preset configurations for pod affinity, po
 | `keycloakConfigCli.backoffLimit`                                      | Number of retries before considering a Job as failed                                                                                                                                                                                                  | `1`                                   |
 | `keycloakConfigCli.podLabels`                                         | Pod extra labels                                                                                                                                                                                                                                      | `{}`                                  |
 | `keycloakConfigCli.podAnnotations`                                    | Annotations for job pod                                                                                                                                                                                                                               | `{}`                                  |
-| `keycloakConfigCli.extraEnvVars`                                      | Additional environment variables to set                                                                                                                                                                                                               | `[]`                                  |
 | `keycloakConfigCli.nodeSelector`                                      | Node labels for pod assignment                                                                                                                                                                                                                        | `{}`                                  |
 | `keycloakConfigCli.podTolerations`                                    | Tolerations for job pod assignment                                                                                                                                                                                                                    | `[]`                                  |
+| `keycloakConfigCli.availabilityCheck.enabled`                         | Whether to wait until Keycloak is available                                                                                                                                                                                                           | `true`                                |
+| `keycloakConfigCli.availabilityCheck.timeout`                         | Timeout for the availability check (Default is 120s)                                                                                                                                                                                                  | `""`                                  |
+| `keycloakConfigCli.extraEnvVars`                                      | Additional environment variables to set                                                                                                                                                                                                               | `[]`                                  |
 | `keycloakConfigCli.extraEnvVarsCM`                                    | ConfigMap with extra environment variables                                                                                                                                                                                                            | `""`                                  |
 | `keycloakConfigCli.extraEnvVarsSecret`                                | Secret with extra environment variables                                                                                                                                                                                                               | `""`                                  |
 | `keycloakConfigCli.extraVolumes`                                      | Extra volumes to add to the job                                                                                                                                                                                                                       | `[]`                                  |
@@ -675,6 +688,7 @@ As an alternative, you can use of the preset configurations for pod affinity, po
 | `externalDatabase.user`                      | Non-root username for Keycloak                                                                                    | `bn_keycloak`      |
 | `externalDatabase.password`                  | Password for the non-root username for Keycloak                                                                   | `""`               |
 | `externalDatabase.database`                  | Keycloak database name                                                                                            | `bitnami_keycloak` |
+| `externalDatabase.schema`                    | Keycloak database schema                                                                                          | `public`           |
 | `externalDatabase.existingSecret`            | Name of an existing secret resource containing the database credentials                                           | `""`               |
 | `externalDatabase.existingSecretHostKey`     | Name of an existing secret key containing the database host name                                                  | `""`               |
 | `externalDatabase.existingSecretPortKey`     | Name of an existing secret key containing the database port                                                       | `""`               |
@@ -685,12 +699,12 @@ As an alternative, you can use of the preset configurations for pod affinity, po
 
 ### Keycloak Cache parameters
 
-| Name                                     | Description                                                                         | Value        |
-| ---------------------------------------- | ----------------------------------------------------------------------------------- | ------------ |
-| `cache.enabled`                          | Switch to enable or disable the keycloak distributed cache for kubernetes.          | `true`       |
-| `cache.stackName`                        | Set infinispan cache stack to use                                                   | `kubernetes` |
-| `cache.stackFile`                        | Set infinispan cache stack filename to use                                          | `""`         |
-| `cache.useHeadlessServiceWithAppVersion` | Set to true to create the headless service used for ispn containing the app version | `false`      |
+| Name                                     | Description                                                                                                                             | Value            |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `cache.enabled`                          | Switch to enable or disable the keycloak distributed cache for kubernetes.                                                              | `true`           |
+| `cache.stack`                            | Set infinispan cache stack to use, sets KC_CACHE_STACK (<https://www.keycloak.org/server/all-config?q=cache-stack>)                     | `kubernetes`     |
+| `cache.configFile`                       | Set infinispan cache stack config filename sets KC_CACHE_CONFIG_FILE (<https://www.keycloak.org/server/all-config?q=cache-config-file>) | `cache-ispn.xml` |
+| `cache.useHeadlessServiceWithAppVersion` | Set to true to create the headless service used for ispn containing the app version                                                     | `false`          |
 
 ### Keycloak Logging parameters
 
@@ -854,7 +868,7 @@ kubectl delete pod keycloak-postgresql-0
 
 ## License
 
-Copyright &copy; 2024 Broadcom. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+Copyright &copy; 2025 Broadcom. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
