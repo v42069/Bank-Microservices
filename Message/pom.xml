@@ -91,7 +91,7 @@
 				<version>3.4.2</version>
 				<configuration>
 					<to>
-						<image>vighneshkt/message:s14</image>
+						<image>vighneshkt/message:s15</image>
 					</to>
 				</configuration>
 			</plugin>

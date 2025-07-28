@@ -7,6 +7,9 @@ spring:
     active: prod
   config:
     import: "optional:configserver:http://localhost:8071/"
+  cloud:
+    kubernetes:
+      all-namespaces: true
   rabbitmq:
     host: "localhost"
     port: 5672
@@ -26,15 +29,6 @@ spring:
     show-sql: true
  
    
-    
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetchRegistry: true
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8070/eureka/
       
 info:
   app: 

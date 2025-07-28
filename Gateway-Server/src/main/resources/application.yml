@@ -9,11 +9,15 @@ spring:
     username: "guest"
     password: "guest"
   cloud:
-    gateway:
+    kubernetes:
       discovery:
-        locator:
+        enabled: true
+        all-namespaces: true
+    discovery:
+      client:
+        health-indicator: 
           enabled: false
-          lowerCaseServiceId: true
+    gateway:
       httpclient:
         connect-timeout: 1000
         response-timeout: 10s
