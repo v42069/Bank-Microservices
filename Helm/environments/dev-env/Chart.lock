@@ -5,9 +5,6 @@ dependencies:
 - name: configserver
   repository: file://../../v-services/configserver
   version: 0.1.0
-- name: eurekaserver
-  repository: file://../../v-services/eurekaserver
-  version: 0.1.0
 - name: accounts
   repository: file://../../v-services/accounts
   version: 0.1.0
@@ -23,5 +20,5 @@ dependencies:
 - name: message
   repository: file://../../v-services/message
   version: 0.1.0
-digest: sha256:41eec11aa230a86f73c3053221dbebdd8d95bd45067d10a0d1b38a2a463e4924
-generated: "2025-07-26T11:35:00.632672+05:30"
+digest: sha256:77f5adcf77d98ec70d277335032917a18319223acc2f49e015346c0b038b20cb
+generated: "2025-07-28T23:44:22.595055+05:30"
