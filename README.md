@@ -1,37 +1,45 @@
-# 🏦 Bank Microservices
+# Bank Microservices with Spring Boot, Docker, Kubernetes
 
-## 📚 Overview
-A modular **banking system** built using **Spring Boot microservices**, designed for scalability, maintainability, and clean API design.
+---
 
-## 🛠️ Tech Stack
+## 📚  Coverage
 
-### 📦 Backend & Microservices
-- Java 17
-- Spring Boot
-- Spring Cloud (Config, Gateway, Eureka, OpenFeign)
-- Spring Data JPA
-- Springdoc OpenAPI (Swagger)
+- ✅ Microservices architecture fundamentals
+- ✅ Spring Boot microservices development
+- ✅ REST API design and best practices
+- ✅ Inter-service communication: REST & Feign Client
+- ✅ Service discovery with **Eureka**
+- ✅ API Gateway with **Spring Cloud Gateway**
+- ✅ Centralized configuration with **Spring Cloud Config Server**
+- ✅ Fault tolerance & resilience with **Resilience4j**
+- ✅ Distributed tracing with **Grafana**
+- ✅ Logging and monitoring with **Loki** and **Prometheus**
+- ✅ Dockerization of microservices using **Docker**
+- ✅ Orchestration with **Kubernetes**
+- ✅ ConfigMaps, Secrets, Deployments, and Services in Kubernetes
+- ✅ Load balancing & scaling microservices
+- ✅ CI/CD concepts with microservices deployment on **Google Cloud**
 
-### 🧱 Architecture & Design
-- Microservices Architecture
-- RESTful APIs
-- DTO, Builder Pattern
-- Resilience4j (Circuit Breaker, Retry, RateLimiter)
-- Config Server with Git Integration
+---
 
-### 🗃️ Databases
-- MySQL (via Docker)
-- H2 (for initial development/testing)
+## 🛠 Technologies & Tools Used
 
-### 🐳 Containerization & DevOps
-- Docker & Docker Compose
-- Buildpacks (alternative to Dockerfiles)
-- DockerHub (image registry)
+### Backend
+- **Java 17**
+- **Spring Boot** (REST APIs, Spring Data JPA, Spring Web)
+- **Spring Cloud** (Eureka, Config Server, Gateway, OpenFeign)
+- **Resilience4j** (Circuit Breaker, Retry, Rate Limiter)
+- **MapStruct** (DTO mapping)
+- **Hibernate / JPA**
+- **PostgreSQL**
 
-### 🔐 Configuration & Profiles
-- Spring Profiles (`dev`, `qa`, `prod`)
-- Externalized Configuration with Spring Cloud Config Server
-- Encrypted Properties (JCE + Spring Cloud)
+### DevOps / Deployment
+- **Docker**
+- **Docker Compose**
+- **Kubernetes** (kubectl, minikube, manifests)
+- **ConfigMaps & Secrets**
+- **Kubernetes Services** (ClusterIP, NodePort, LoadBalancer)
+- **Kubernetes Deployment & Scaling**
 
 ### 🔍 Observability & Monitoring
 - **Logging**: Grafana + Loki + Promtail
@@ -39,40 +47,47 @@ A modular **banking system** built using **Spring Boot microservices**, designed
 - **Tracing**: OpenTelemetry + Grafana Tempo
 - **Alerting**: Grafana Alerting
 
-### 📄 Documentation
-- Swagger UI (Springdoc OpenAPI)
+---
+
+## 🏗 Microservices Overview
+
+### 1. **Accounts Service**
+- Handles **customer account creation, updates, and retrieval**.
+- Stores account details in its own **PostgreSQL** database.
+- Exposes REST endpoints for account operations.
+
+### 2. **Cards Service**
+- Handles **credit/debit card issuance and management**.
+- Each customer can have multiple cards.
+- Independent **PostgreSQL** database.
+
+### 3. **Loans Service**
+- Manages **loan creation, updates, and retrieval**.
+- Supports multiple loan types.
+- Independent **PostgreSQL** database.
+
+### 4.**API Gateway**
+- Routes requests to backend microservices
+- Central entry point for the system
+- Configured with filters for logging and authentication (future-ready)
+
+### 5. **Eureka Server**
+- Service registry for dynamic service discovery
+
+### 6. **Config Server**
+- Centralized configuration management for all services
+- Stores configs in Git repository
 
 ---
 
-## ⚙️ Microservices
+## 🔗 Inter-Service Communication
 
-- **🧾 Account & Customer Service** – Handles bank accounts and customer data  
-- **🏠 Loans Service** – Manages loans  
-- **💳 Cards Service** – Manages card issuance and operations  
-
-
----
-### 🛠️ Git Branches Summary
-
-### 🛠️ Service Infrastructure Branch Overview
-
-The course also emphasizes critical service infrastructure components essential for running microservices in production:
-
-- **🔍 Observability**: Enables monitoring and debugging of microservices using:
-  - Centralized logging (Grafana + Loki + Promtail)
-  - Metrics and dashboards (Micrometer + Prometheus + Grafana)
-  - Distributed tracing (OpenTelemetry + Tempo)
-  - Alerting mechanisms
-
-- **🔐 Security**: Although detailed security sections come later, foundational infrastructure includes:
-  - API Gateway security and filters
-  - Property encryption using Spring Cloud Config
-  - Service-level communication protection and token handling
-
-These infrastructure features help ensure **scalability, reliability, and maintainability** of microservices in real-world environments.
+- **Synchronous**: REST + Feign Client
+- **Asynchronous** *(optional for future)*: Kafka / RabbitMQ
+- **Service Discovery**: Eureka Client registration
+- **Load Balancing**: Spring Cloud LoadBalancer
 
 ---
-
 
 ### 🎯 Core Features
 
@@ -212,6 +227,67 @@ These infrastructure features help ensure **scalability, reliability, and mainta
 - Docker-based setup:
 - **Docker**: `s14` version images used
 
+### ✅ Kubernetes Basics & Local Setup
+- Introduction to **container orchestration challenges** and why Kubernetes is needed
+- Deep dive into **Kubernetes internal architecture** (API Server, etcd, Scheduler, Controller Manager, Kubelet, etc.)
+- Installed and set up a **local Kubernetes cluster** using Docker Desktop
+- Deployed and accessed the **Kubernetes Dashboard UI** for cluster management
+
+---
+
+### ✅ Deploying Microservices in Kubernetes
+- Created **Kubernetes YAML manifest files** to deploy microservices
+- Deployed **Config Server** into Kubernetes cluster
+- Created and used **ConfigMaps** for environment variables inside Kubernetes
+- Prepared manifests for Accounts, Loans, and Cards microservices
+- Implemented **Automatic Self-Healing** in Kubernetes pods
+- Configured **Automatic Rollouts and Rollbacks** for zero-downtime deployments
+- Explored **Kubernetes Service types** (ClusterIP, NodePort, LoadBalancer) with demos
+
+---
+
+### ✅ Helm Package Manager Integration
+- Introduction to **Helm** and the problems it solves
+- Installed **Helm CLI** and explored Helm chart structure
+- Created **custom Helm charts** for:
+  - Accounts microservice
+  - Loans, Cards, Config Server, and other supporting services
+- Created environment-specific Helm charts (**Dev**, **QA**, **Prod**)
+- Used important Helm commands:
+  - `helm template` for manifest previews
+  - `helm install` for deployments
+  - `helm upgrade` for rolling updates
+  - `helm history` & `helm rollback` for version control
+  - `helm uninstall` for cleanup
+
+---
+
+### ✅ Deploying Supporting Services with Helm
+- Installed **Keycloak** in Kubernetes using Helm
+- Installed **Kafka** in Kubernetes using Helm
+- Installed **Prometheus**, **Grafana**, **Loki**, and **Tempo** for observability
+- Deployed **EazyBank microservices** via Helm charts in Kubernetes
+
+---
+
+### ✅ Kubernetes-native Service Discovery & Load Balancing
+- Introduction to **server-side service discovery** in Kubernetes
+- Installed **Spring Cloud Kubernetes Discovery Server** in K8s cluster
+- Made **Discovery Client changes** in microservices to use Kubernetes-native service resolution
+- Updated Helm charts to include Discovery Server configuration
+- Verified **load balancing** and service discovery within Kubernetes
+
+---
+
+### ✅ Cloud Deployment on Google Kubernetes Engine (GKE)
+- Set up **Google Cloud account** and installed Google Cloud SDK
+- Created **Kubernetes cluster** in Google Cloud
+- Installed all microservices and supporting services (Keycloak, Kafka, Grafana, Prometheus, etc.) on GKE
+- Verified **Grafana dashboards, metrics, and traces** in the cloud environment
+- Demonstrated complete **EazyBank microservices** setup running on GKE
+- Deleted Google Cloud Kubernetes cluster to avoid unnecessary costs
+
+
 ---
 
 ## 📦 How to Run
@@ -220,4 +296,3 @@ These infrastructure features help ensure **scalability, reliability, and mainta
 # Step 1: Select containers based on features 
 dockerhub URL: https://hub.docker.com/repositories/vighneshkt
 docker-compose up --build
-
