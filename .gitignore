@@ -1,4 +1,45 @@
+# === macOS ===
 .DS_Store
+
+# === Eclipse / IntelliJ / VSCode ===
+.metadata/
+*.iml
+*.classpath
+*.project
+.idea/
+.vscode/
+.settings/
+
+# === Backend (Spring Boot / Maven) ===
+backend/**/target/
+backend/**/.mvn/
+backend/**/out/
+
+# === Frontend (React / Node.js) ===
+frontend/**/node_modules/
+frontend/**/dist/
+frontend/**/build/
+frontend/**/.vite/
+frontend/**/.next/
+
+# === Logs ===
+*.log
+logs/
+backend/**/logs/
+frontend/**/logs/
+
+# === Env Files ===
+.env
+*.env.local
+frontend/**/.env
+backend/**/.env
+
+# === Docker ===
+docker-compose/prod/.data/
+*.pid
+
+# === Kubernetes / Helm ===
+*.tgz.DS_Store
 .metadata/
 docker-compose/prod/.data/
 
