@@ -266,7 +266,7 @@
 - Installed **Keycloak** in Kubernetes using Helm
 - Installed **Kafka** in Kubernetes using Helm
 - Installed **Prometheus**, **Grafana**, **Loki**, and **Tempo** for observability
-- Deployed **EazyBank microservices** via Helm charts in Kubernetes
+- Deployed **Bank microservices** via Helm charts in Kubernetes
 
 ---
 
@@ -284,7 +284,7 @@
 - Created **Kubernetes cluster** in Google Cloud
 - Installed all microservices and supporting services (Keycloak, Kafka, Grafana, Prometheus, etc.) on GKE
 - Verified **Grafana dashboards, metrics, and traces** in the cloud environment
-- Demonstrated complete **EazyBank microservices** setup running on GKE
+- Demonstrated complete **Bank microservices** setup running on GKE
 - Deleted Google Cloud Kubernetes cluster to avoid unnecessary costs
 
 
