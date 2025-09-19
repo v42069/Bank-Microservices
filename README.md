@@ -20,6 +20,7 @@
 - ✅ Load balancing & scaling microservices
 - ✅ CI/CD concepts with microservices deployment on **Google Cloud**
 
+- **Temperory Frontend created**
 ---
 
 ## 🛠 Technologies & Tools Used
@@ -78,12 +79,18 @@
 - Centralized configuration management for all services
 - Stores configs in Git repository
 
+### 7. **Messaging**
+- Asynchronous messaging using Kafka / RabbitMQ
+-  **Producer & Consumer Microservices** using Spring Cloud Stream
+
+
+
 ---
 
 ## 🔗 Inter-Service Communication
 
 - **Synchronous**: REST + Feign Client
-- **Asynchronous** *(optional for future)*: Kafka / RabbitMQ
+- **Asynchronous** : Kafka / RabbitMQ
 - **Service Discovery**: Eureka Client registration
 - **Load Balancing**: Spring Cloud LoadBalancer
 
