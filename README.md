@@ -1,5 +1,17 @@
-# Bank Microservices with Spring Boot, Docker, Kubernetes
+# Bank Microservices 
 
+# Tech Stack Overview
+
+![App Screenshot](frontend/public/img2.png)
+
+
+
+# System Overview
+
+The Bank Microservices system is a production-ready distributed banking platform that demonstrates modern microservices architecture patterns. The system provides complete banking functionality including account management, card services, and loan processing through independently deployable microservices.
+The platform serves as both a functional banking application and a reference implementation showcasing enterprise-grade microservices patterns such as service discovery, API gateway, distributed configuration, circuit breakers, and comprehensive observability.
+
+![App Screenshot](frontend/public/img1.png)
 ---
 
 ## 📚  Coverage
@@ -23,30 +35,134 @@
 - **Temperory Frontend created**
 ---
 
-## 🛠 Technologies & Tools Used
+## 🧩 Technology Stack
 
-### Backend
-- **Java 17**
-- **Spring Boot** (REST APIs, Spring Data JPA, Spring Web)
-- **Spring Cloud** (Eureka, Config Server, Gateway, OpenFeign)
-- **Resilience4j** (Circuit Breaker, Retry, Rate Limiter)
-- **MapStruct** (DTO mapping)
-- **Hibernate / JPA**
-- **PostgreSQL**
+The system leverages a **modern technology stack** designed for **cloud-native microservices development**.
 
-### DevOps / Deployment
-- **Docker**
-- **Docker Compose**
-- **Kubernetes** (kubectl, minikube, manifests)
-- **ConfigMaps & Secrets**
-- **Kubernetes Services** (ClusterIP, NodePort, LoadBalancer)
-- **Kubernetes Deployment & Scaling**
+---
 
-### 🔍 Observability & Monitoring
-- **Logging**: Grafana + Loki + Promtail
-- **Metrics**: Micrometer + Prometheus
-- **Tracing**: OpenTelemetry + Grafana Tempo
-- **Alerting**: Grafana Alerting
+### ⚙️ Backend Technologies
+- **Java 17** – Core programming language  
+- **Spring Boot** – Application framework for REST APIs, Spring Data JPA, Spring Web  
+- **Spring Cloud** – Microservices infrastructure (Eureka, Config Server, Gateway, OpenFeign)  
+- **Resilience4j** – Circuit breaker, retry, and rate-limiting patterns  
+- **MapStruct** – DTO mapping framework  
+- **PostgreSQL** – Primary database for all business services  
+
+---
+
+### 🔗 Communication & Messaging
+- **REST APIs** – Synchronous service communication  
+- **OpenFeign** – Declarative REST client using `@FeignClient`  
+- **Apache Kafka** – Event streaming platform (KRaft mode)  
+- **RabbitMQ** – Message broker for event-driven architecture  
+- **Spring Cloud Stream** – Messaging abstraction layer  
+
+---
+
+### 🔒 Security & Authentication
+- **OAuth2** – Authentication and authorization protocol  
+- **Keycloak** – Identity and access management provider  
+- **JWT Tokens** – Token-based authentication  
+
+---
+
+### 📊 Observability Stack
+- **Grafana** – Visualization and dashboarding  
+- **Prometheus** – Metrics collection and monitoring  
+- **Loki** – Log aggregation system  
+- **Grafana Tempo** – Distributed tracing  
+- **OpenTelemetry** – Observability instrumentation  
+
+---
+
+## 🧠 Key System Capabilities
+
+The system implements comprehensive **enterprise-grade capabilities** across multiple domains.
+
+---
+
+### 📡 API Management
+- Centralized API routing through **Spring Cloud Gateway**  
+- Request/response logging and tracing with **custom filters**  
+- **Rate limiting** using Redis-based rate limiter  
+- Cross-cutting concerns implemented at **gateway level**  
+
+---
+
+### 🛡️ Resilience Patterns
+- **Circuit Breaker** – Implemented with Resilience4j for failure isolation  
+- **Retry Logic** – Automatic retry mechanisms for transient failures  
+- **Rate Limiting** – Request throttling to prevent system overload  
+- **Timeout Configuration** – Configurable timeouts for service calls  
+
+---
+
+### ⚙️ Configuration Management
+- **Externalized configuration** using Spring Cloud Config Server  
+- **Environment-specific profiles** (dev, qa, prod)  
+- **Git-based configuration storage** with encryption support  
+- **Automatic configuration refresh** capabilities  
+
+---
+
+### 🔐 Security Implementation
+- **OAuth2 Client Credentials Grant Flow** – For service-to-service communication  
+- **Authorization Code Grant Flow** – For user authentication  
+- **Role-Based Access Control (RBAC)** – Implemented via Keycloak integration  
+- **API security enforcement** at gateway level  
+
+---
+
+## 🔄 Communication Patterns
+
+The system implements both **synchronous** and **asynchronous** communication models to handle various interaction types.
+
+---
+
+### 🔁 Synchronous Communication
+- **REST APIs** – Standard HTTP-based service communication  
+- **Feign Client** – Declarative REST client with `@FeignClient` annotations  
+- **Service Discovery** – Dynamic service location via **Eureka registration**  
+- **Load Balancing** – Client-side load balancing using **Spring Cloud LoadBalancer**  
+
+---
+
+### ⚡ Asynchronous Communication
+- **Event-Driven Architecture** – Loose coupling through messaging  
+- **Apache Kafka** – High-throughput event streaming (KRaft mode)  
+- **RabbitMQ** – Message queuing for event handling  
+- **Spring Cloud Stream** – Messaging abstraction with functional programming model  
+- **StreamBridge** – Two-way communication between services  
+
+---
+
+## ☁️ Deployment Models
+
+The system supports **multiple deployment strategies**, from local development to full cloud-native production.
+
+---
+
+### 💻 Local Development
+- **Docker Compose** – Single-command local environment setup  
+- **Development Profiles** – Environment-specific configurations  
+- **Hot Reloading** – Apply code changes without restarting  
+
+---
+
+### 🧱 Container Orchestration
+- **Docker** – Containerized microservices using multi-stage builds  
+- **Kubernetes** – Production-grade orchestration  
+- **Helm Charts** – Package management for Kubernetes deployments  
+- **ConfigMaps & Secrets** – Kubernetes-native configuration management  
+
+---
+
+### 🌐 Cloud Deployment
+- **Google Kubernetes Engine (GKE)** – Managed Kubernetes in Google Cloud  
+- **Kubernetes-native Service Discovery** – Server-side discovery  
+- **Horizontal Pod Autoscaling** – Auto-scaling based on metrics  
+- **Rolling Updates** – Zero-downtime deployment strategy  
 
 ---
 
@@ -83,16 +199,6 @@
 - Asynchronous messaging using Kafka / RabbitMQ
 -  **Producer & Consumer Microservices** using Spring Cloud Stream
 
-
-
----
-
-## 🔗 Inter-Service Communication
-
-- **Synchronous**: REST + Feign Client
-- **Asynchronous** : Kafka / RabbitMQ
-- **Service Discovery**: Eureka Client registration
-- **Load Balancing**: Spring Cloud LoadBalancer
 
 ---
 
@@ -136,6 +242,7 @@
 - Built `config-server` with Spring Cloud Config
 - Externalized properties to file system and Git
 - Implemented:
+  - Created **common configurations** for all microservices
   - Encryption/decryption of config properties
   - Auto-refresh via `/actuator/refresh`
   - Spring Cloud Bus for distributed refresh
@@ -171,7 +278,7 @@
 - Implemented:
   - **Circuit Breaker pattern (Gateway + Feign)**
   - **Retry pattern (Accounts)**
-  - **Rate Limiting using Redis RateLimiter (Gateway + Accounts)**
+  - **Rate Limiting using Redis RateLimiter (Gateway + Accounts) using bucket algorithm**
 - Configured timeouts and aspect order for resilience
 - Docker-based setup:
 - Docker `s10` version images
@@ -235,8 +342,8 @@
 - **Docker**: `s14` version images used
 
 ### ✅ Kubernetes Basics & Local Setup
-- Introduction to **container orchestration challenges** and why Kubernetes is needed
-- Deep dive into **Kubernetes internal architecture** (API Server, etcd, Scheduler, Controller Manager, Kubelet, etc.)
+- Solved to **container orchestration challenges** and using Kubernetes
+- Implemented **Kubernetes internal architecture** (API Server, etcd, Scheduler, Controller Manager, Kubelet, etc.)
 - Installed and set up a **local Kubernetes cluster** using Docker Desktop
 - Deployed and accessed the **Kubernetes Dashboard UI** for cluster management
 
@@ -254,7 +361,7 @@
 ---
 
 ### ✅ Helm Package Manager Integration
-- Introduction to **Helm** and the problems it solves
+- Implemented **Helm** 
 - Installed **Helm CLI** and explored Helm chart structure
 - Created **custom Helm charts** for:
   - Accounts microservice
@@ -278,7 +385,7 @@
 ---
 
 ### ✅ Kubernetes-native Service Discovery & Load Balancing
-- Introduction to **server-side service discovery** in Kubernetes
+- Implemented  **server-side service discovery** in Kubernetes
 - Installed **Spring Cloud Kubernetes Discovery Server** in K8s cluster
 - Made **Discovery Client changes** in microservices to use Kubernetes-native service resolution
 - Updated Helm charts to include Discovery Server configuration
