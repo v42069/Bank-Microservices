@@ -1,5 +1,9 @@
 # Bank Microservices 
 
+This document provides a high-level introduction to the Bank Microservices system, a comprehensive distributed banking application built using Spring Boot and Spring Cloud technologies.
+
+
+
 # Tech Stack Overview
 
 ![App Screenshot](frontend/public/img2.png)
@@ -204,14 +208,13 @@ The system supports **multiple deployment strategies**, from local development t
 
 ### 🎯 Core Features
 
-### ✅  CRUD Operations in Accounts Service
+### ✅  CRUD Operations in Accounts,Loans and Cards Service
 - Created JPA Entities and Repositories
 - DTO pattern introduction and implementation
 - Implemented:
-  - Create Account API
-  - Read Account API
-  - Update Account API
-  - Delete Account API
+  - Springboot layered Architecture
+  - Multiple Crud API
+  - Detaild Response Structures for Error and Success Responses
 - Global exception handling
 - Auto-update of audit fields (created_at, updated_at)
 
